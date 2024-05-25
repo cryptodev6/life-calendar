@@ -30,6 +30,10 @@ body {
     text-align: center;
 }
 
+.weeks-labels span.month-separator {
+    margin-left: 2px;
+}
+
 .label {
     margin-bottom: 5px;
 }
@@ -66,9 +70,51 @@ body {
 .week {
     width: 15px;
     height: 15px;
-    border: 1px solid #ccc;
+    border: 1px solid #0000;
+    border-radius: 5px;
+    transition: border 2s;
 }
 
 .week.filled {
-    background-color: #4CAF50;
+    background-color: #1a1a1a;
+}
+
+.week:hover {
+    border: 2px solid #000;
+}
+
+.week.baby {
+    border-color: green;
+}
+
+.week.toddler {
+    border-color: yellow;
+}
+
+.week.preschool {
+    border-color: orange;
+}
+
+.week.schoolage {
+    border-color: blue;
+}
+
+.week.teen {
+    border-color: purple;
+}
+
+.week.youngadult {
+    border-color: cyan;
+}
+
+.week.adult {
+    border-color: magenta;
+}
+
+.week.middleaged {
+    border-color: brown;
+}
+
+.week.senior {
+    border-color: gray;
 }
