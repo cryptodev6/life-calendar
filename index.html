@@ -11,8 +11,18 @@
     <label for="birthdate">Enter your birth date:</label>
     <input type="date" id="birthdate">
     <button onclick="calculateWeeks()">Submit</button>
-    <div id="calendar"></div>
-
+    <div class="calendar-container">
+        <div class="labels-top">
+            <span class="label">Weeks of the Year</span>
+            <div class="weeks-labels"></div>
+        </div>
+        <div class="calendar">
+            <div class="labels-left">
+                <div class="years-labels"></div>
+            </div>
+            <div id="calendar"></div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

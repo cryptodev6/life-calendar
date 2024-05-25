@@ -18,3 +18,21 @@ function calculateWeeks() {
         calendar.appendChild(week);
     }
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const weeksLabelsContainer = document.querySelector('.weeks-labels');
+    for (let i = 1; i <= 52; i++) {
+        const span = document.createElement('span');
+        if (i === 1 || i % 5 === 0) {
+            span.textContent = i;
+        }
+        weeksLabelsContainer.appendChild(span);
+    }
+
+    const yearsLabelsContainer = document.querySelector('.years-labels');
+    for (let i = 0; i < 90; i++) {
+        const span = document.createElement('span');
+        span.textContent = i;
+        yearsLabelsContainer.appendChild(span);
+    }
+});
