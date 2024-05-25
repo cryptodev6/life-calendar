@@ -10,12 +10,7 @@ const lifeStages = [
     { stage: "Adultez tardía", startYear: 65, endYear: 90, className: "senior" }
 ];
 
-function calculateWeeks() {
-    const birthdate = new Date(document.getElementById('birthdate').value);
-    const today = new Date();
-    const diffTime = Math.abs(today - birthdate);
-    const diffWeeks = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
-
+function initializeCalendar() {
     const calendar = document.getElementById('calendar');
     calendar.innerHTML = '';
 
@@ -28,12 +23,22 @@ function calculateWeeks() {
 
         const week = document.createElement('div');
         week.classList.add('week', lifeStage.className);
-        if (i < diffWeeks) {
-            week.classList.add('filled');
-        }
         week.title = `Week: ${weekOfYear}, Year: ${year}, Stage: ${lifeStage.stage}`;
         week.onclick = () => alert(`Week: ${weekOfYear}, Year: ${year}, Stage: ${lifeStage.stage}`);
         calendar.appendChild(week);
+    }
+}
+
+function calculateWeeks() {
+    const birthdate = new Date(document.getElementById('birthdate').value);
+    const today = new Date();
+    const diffTime = Math.abs(today - birthdate);
+    const diffWeeks = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
+
+    const calendar = document.getElementById('calendar').children;
+
+    for (let i = 0; i < diffWeeks; i++) {
+        calendar[i].classList.add('filled');
     }
 }
 
@@ -54,4 +59,6 @@ document.addEventListener("DOMContentLoaded", function() {
         span.textContent = i;
         yearsLabelsContainer.appendChild(span);
     }
+
+    initializeCalendar();
 });
