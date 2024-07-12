@@ -10,6 +10,24 @@ const lifeStages = [
     { stage: "Adultez tardía", startYear: 65, endYear: 90, className: "senior" }
 ];
 
+let facts = [];
+
+async function loadFacts() {
+    try {
+        const response = await fetch('facts.json');
+        facts = await response.json();
+    } catch (error) {
+        console.error('Failed to load facts:', error);
+    }
+}
+
+function getRandomFact(age) {
+    const filteredFacts = facts.filter(fact => fact.age === age);
+    if (filteredFacts.length === 0) return "No facts available for this age.";
+    const randomIndex = Math.floor(Math.random() * filteredFacts.length);
+    return filteredFacts[randomIndex].text;
+}
+
 function initializeCalendar() {
     const calendar = document.getElementById('calendar');
     calendar.innerHTML = '';
@@ -24,13 +42,18 @@ function initializeCalendar() {
         const week = document.createElement('div');
         week.classList.add('week', lifeStage.className);
         week.title = `Week: ${weekOfYear}, Year: ${year}, Stage: ${lifeStage.stage}`;
-        week.onclick = () => alert(`Week: ${weekOfYear}, Year: ${year}, Stage: ${lifeStage.stage}`);
+        week.onclick = () => {
+            const fact = getRandomFact(year);
+            alert(`Week: ${weekOfYear}, Year: ${year}, Stage: ${lifeStage.stage}\n\nFact: ${fact}`);
+        };
         calendar.appendChild(week);
     }
 }
 
 function calculateWeeks() {
-    const birthdate = new Date(document.getElementById('birthdate').value);
+    const birthdateInput = document.getElementById('birthdate');
+    const birthdate = new Date(birthdateInput.value);
+    localStorage.setItem('birthdate', birthdateInput.value);
     const today = new Date();
     const diffTime = Math.abs(today - birthdate);
     const diffWeeks = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
@@ -42,7 +65,14 @@ function calculateWeeks() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
+    await loadFacts();
+
+    const storedBirthdate = localStorage.getItem('birthdate');
+    if (storedBirthdate) {
+        document.getElementById('birthdate').value = storedBirthdate;
+    }
+
     const weeksLabelsContainer = document.querySelector('.weeks-labels');
     for (let i = 1; i <= 52; i++) {
         const span = document.createElement('span');
@@ -61,4 +91,5 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     initializeCalendar();
+    calculateWeeks();
 });
